@@ -1,1 +1,1 @@
-api: vvibe
+web: vvibe
