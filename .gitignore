@@ -5,6 +5,7 @@
 *.so
 *.dylib
 .idea/
+.docker_build/
 
 # Test binary, built with `go test -c`
 *.test

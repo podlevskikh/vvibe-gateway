@@ -1,4 +1,4 @@
-package vvibe_gateway
+package main
 
 import (
 	"log"
