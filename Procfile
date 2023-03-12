@@ -1,1 +1,1 @@
-web: vvibe
+web: /app/bin/vvibe-gateway
