@@ -1,0 +1,368 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "Vvibe API",
+    "title": "Vvibe API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/auth/token": {
+      "post": {
+        "operationId": "token",
+        "tags": [
+          "auth"
+        ],
+        "description": "Obtain new token",
+        "requestBody": {
+          "description": "Token request",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grantType": {
+                    "type": "string",
+                    "enum": [
+                      "authorization_code"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          }
+        }
+      }
+    },
+    "/api/login/social": {
+      "post": {
+        "operationId": "loginSocial",
+        "tags": [
+          "auth"
+        ],
+        "description": "Login social",
+        "requestBody": {
+          "description": "Installation data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "social": {
+                    "type": "string",
+                    "enum": [
+                      "instagram"
+                    ]
+                  },
+                  "accessToken": {
+                    "type": "string",
+                    "example": "IGQVJXNldEeTR4QnNNV0l5bW8zR2tNb1hFQ2hvVz"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Token"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/profile": {
+      "get": {
+        "operationId": "getProfile",
+        "tags": [
+          "profile"
+        ],
+        "description": "Get profile",
+        "responses": {
+          "200": {
+            "description": "profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Profile"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createProfile",
+        "tags": [
+          "profile"
+        ],
+        "description": "Create profile",
+        "requestBody": {
+          "description": "Profile data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Profile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "profile",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Profile"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/preferences": {
+      "get": {
+        "operationId": "getPreferences",
+        "tags": [
+          "preferences"
+        ],
+        "description": "Get preferences",
+        "responses": {
+          "200": {
+            "description": "preferences",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Preferences"
+                }
+              }
+            }
+          },
+          "403": {
+            "$ref": "#/components/responses/NotAuthorized"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          }
+        }
+      },
+      "post": {
+        "operationId": "createPreferences",
+        "tags": [
+          "preferences"
+        ],
+        "description": "Create preferences",
+        "requestBody": {
+          "description": "Preferences data",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Preferences"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "preferences",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Preferences"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "NotFound": {
+        "description": "Identity not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "NotAuthorized": {
+        "description": "Not authorized request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Bad request request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "not_found"
+          },
+          "message": {
+            "type": "string",
+            "example": "not found"
+          }
+        }
+      },
+      "Gender": {
+        "type": "string",
+        "enum": [
+          "male",
+          "female"
+        ]
+      },
+      "Profile": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Michael"
+          },
+          "description": {
+            "type": "string",
+            "example": "Nothing is more fluid or less binary than human relationship"
+          },
+          "birthDate": {
+            "type": "string",
+            "example": "1987-10-20"
+          },
+          "gender": {
+            "$rel": "#/components/schemas/Genger"
+          }
+        }
+      },
+      "Preferences": {
+        "type": "object",
+        "properties": {
+          "minAge": {
+            "type": "integer",
+            "example": 18
+          },
+          "maxAge": {
+            "type": "integer",
+            "example": 75
+          },
+          "genders": {
+            "type": "array",
+            "items": {
+              "$rel": "#/components/schemas/Genger"
+            }
+          }
+        }
+      },
+      "Publication": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "type": {
+            "type": "string",
+            "example": "picture"
+          },
+          "previewUrl": {
+            "type": "string",
+            "example": "https://www.example.com/previewUrl"
+          },
+          "mediaUrls": {
+            "type": "string",
+            "example": "https://www.example.com/url"
+          }
+        }
+      },
+      "Installation": {
+        "type": "object",
+        "properties": {
+          "osCode": {
+            "type": "string",
+            "example": "ios"
+          },
+          "osVersion": {
+            "type": "string",
+            "example": "14.1"
+          },
+          "osStore": {
+            "type": "string",
+            "example": "AppStore"
+          }
+        }
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "example": "723eca46-c106-11ed-afa1-0242ac120002"
+          }
+        }
+      }
+    }
+  }
+}

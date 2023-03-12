@@ -22,5 +22,7 @@ func main() {
 		c.JSON(http.StatusOK, "Hello world")
 	})
 
+	router.GET("/openapi.json", func(c *gin.Context) { http.ServeFile(c.Writer, c.Request, "./openapi.json") })
+
 	router.Run(":" + port)
 }
